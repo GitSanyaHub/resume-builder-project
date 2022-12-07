@@ -1,0 +1,33 @@
+{% extends "base_pdf.html" %}
+{{data|safe}}
+{% load static %}
+{% block title %} Мой резюме {%endblock %}
+
+{% block content %}
+
+    <h3>Резюме {{ resume.user }}</h3>
+           {% if resume.photo %}
+                <img class="" src="{{ resume.photo.url }}">
+            {% else %}
+                <img src="{% static '\img\user.png' %}" height=200 width=200>
+            {% endif %}
+    <div class="card" style="width: 28rem;">
+      <div class="card-body">
+        <h5 class="card-title">{{ resume.title }}</h5>
+        <p class="card-text"><p>О вас</p> {{ resume.content }} </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ resume.first_name }} {{ resume.last_name }}</li>
+        <li class="list-group-item">Адрес: {{ resume.address }}</li>
+        <li class="list-group-item">Телефон: {{ resume.phone }}</li>
+        <li class="list-group-item">Почта: {{ resume.email_two }}</li>
+        <li class="list-group-item">Обновлён: {{ resume.time_update }}</li>
+      </ul>
+      <div class="card-body">
+          {% if user.id == resume.user.id %}
+            <a class="btn btn-info" href=" {%url 'create_resume' resume.id %}">Редактировать</a>
+          {% endif %}
+      </div>
+    </div>
+
+{% endblock %}

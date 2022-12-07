@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Мой резюме {%endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+     {% if user.id == resume.user.id %}
+        <div class="card-body">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input class="button" type="submit" value="Update">
+            </form>
+        </div>
+      {% endif %}
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} My Resume {% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">MR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+              <a class="nav-link" href="/admin/" tabindex="-1">Админ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Главная</a>
+            </li>
+              {% if request.user.is_authenticated %}
+              <li class="nav-item ml-5">
+                <a class="btn btn-success nav-link" href="{% url 'resume-detail' user.id %}">Резюме</a>
+            </li>
+              <li class="nav-item ml-5">
+                <a class="btn btn-info nav-link" href="{% url 'create_resume' user.id %}">Редактировать</a>
+            </li>
+              {% else %}
+            <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}">Вход</a> </li>
+              <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+            </li>
+              {% endif %}
+          </ul>
+          <div class="d-flex navbar-nav me-auto mb-2 mb-lg-0">
+              {% if request.user.is_authenticated %}
+              <li class="nav-item"> <a class="btn btn-danger nav-link" href="{% url 'logout' %}">{{user.username}}|Выход</a></li>
+              <li class="nav-item"> <a class="btn btn-danger nav-link" href="{% url 'pdf' %}">Скачать PDF</a></li>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+    {% block content %} CONTENT {% endblock %}
+    </div>
+</body>
+</html>
